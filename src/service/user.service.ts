@@ -17,17 +17,4 @@ export class UserService {
     return this.http.post(url, data);
   }
 
-  async findOneUser(data: LoginUser) {
-    const url = baseUrl + "/find";
-    const loginUser: LoginUser = await this.http.post<User>(url, data).toPromise();
-    if (loginUser != null) {
-      this.loggedInUserService.setLoggedInUser(loginUser);
-      return true;
-    }
-    else {
-      return false;
-    }
-    return loginUser != null;
-  }
-
 }

@@ -10,6 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
 import { AppointmentEntityComponent } from './appointments/list-appointments/appointment-entity/appointment-entity.component';
 import { AppointmentFormComponent } from './appointments/appointment-form/appointment-form.component';
+import { JwtModule } from '@auth0/angular-jwt';
+import { AuthService } from '../service/auth.service';
+import { AuthGuard } from '../guard/auth.guard';
+import { UserService } from '../service/user.service';
+import { AppointmentService } from '../service/appointment.service';
+
+export function tokenGetter() {
+  return localStorage.getItem('access_token');
+}
 
 @NgModule({
   declarations: [
@@ -25,9 +34,21 @@ import { AppointmentFormComponent } from './appointments/appointment-form/appoin
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    JwtModule.forRoot({
+      config: {
+        tokenGetter: tokenGetter,
+        allowedDomains: ['localhost:8080'],
+        disallowedRoutes: ['localhost:8080/api/auth']
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    AppointmentService,
+    UserService,
+    AuthService,
+    AuthGuard
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

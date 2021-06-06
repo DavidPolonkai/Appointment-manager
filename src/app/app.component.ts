@@ -10,12 +10,12 @@ export class AppComponent{
 
   name;
   constructor(private loggedInUserService: LoggedInUserService) {
-    this.name = this.loggedInUserService.loginUser
+    this.name = this.loggedInUserService.getName;
   }
   title = 'Appointment-manager';
 
   getName() {
-    return (this.name?.name != null ? this.name?.name : "");
+    return (this.name != null ? this.name : "");
   }
   
 }

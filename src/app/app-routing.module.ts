@@ -5,6 +5,7 @@ import { AppointmentFormComponent } from './appointments/appointment-form/appoin
 import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
 import { LoginUserComponent } from './user/login-user/login-user.component';
 import { RegisterUserComponent } from './user/register-user/register-user.component';
+import { AuthGuard } from '../guard/auth.guard';
 
 const routes: Routes = [
   {
@@ -18,11 +19,12 @@ const routes: Routes = [
   {
     path: 'appointments',
     component: ListAppointmentsComponent,
-    canDeactivate: [CanDeactivateGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'appointmentForm',
-    component: AppointmentFormComponent
+    component: AppointmentFormComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

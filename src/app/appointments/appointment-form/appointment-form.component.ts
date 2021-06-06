@@ -24,7 +24,9 @@ export class AppointmentFormComponent implements OnInit {
     const appointment: Appointment = this.appointmentForm.value;
     appointment.userid = this.loggedInUserService.getId();
     console.log(appointment);
-    await this.appointmentService.save(appointment);
+    if (appointment.userid != undefined) { 
+     await this.appointmentService.save(appointment);
+    }
   }
 
 }

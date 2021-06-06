@@ -12,5 +12,4 @@ const mongoose = require('mongoose');
         {collection: 'appointment'}
       );
     
-      
     module.exports = mongoose.model("appointment", Appointment);

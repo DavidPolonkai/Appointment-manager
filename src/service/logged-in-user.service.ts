@@ -6,7 +6,7 @@ import { LoginUser } from 'src/model/LoginUser';
   providedIn: 'root'
 })
 export class LoggedInUserService {
-  loginUser: LoginUser = null;
+  private loginUser: LoginUser = null;
 
   constructor() { }
 

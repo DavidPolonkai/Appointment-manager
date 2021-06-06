@@ -13,6 +13,7 @@ export class AppointmentService {
 
   async save(appointment: Appointment) {
     const url = baseUrl + "/create";
-    return await this.http.post(url, appointment);
+    console.log("asd");
+    return this.http.post("http://localhost:8080/api/appointment/create", appointment);
   }
 }

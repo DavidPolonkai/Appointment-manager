@@ -1,6 +1,7 @@
 const { json } = require("express");
 const User = require("../models/user");
 const router = require("express").Router();
+var token = require("../JWTtoken/JWT").token;
 
 router.route("/create").post((req, res) =>
 {
@@ -21,16 +22,6 @@ router.route("/getAll").get((req, res) => {
             res.json(data);
         }
     })   
-});
-
-router.route("/find").post((req, res) => {
-    User.findOne(req.body,'_id,name,email,address', (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data);
-        }
-   })
 });
 
 
