@@ -1,1 +1,3 @@
-<p>list-appointments works!</p>
+<div class="align-middle" *ngFor="let appointment of appointmentList">
+<app-appointment-entity [appointment]="appointment"></app-appointment-entity>
+</div>

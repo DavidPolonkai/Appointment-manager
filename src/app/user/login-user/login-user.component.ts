@@ -29,8 +29,7 @@ export class LoginUserComponent implements OnInit {
     const requestedUser: LoginUser = this.loginForm.value;
     //requestedUser.password = crypto.hash(user.password,10);
     this.authService.login(requestedUser);
-    //if (this.loginStatus) this.router.navigate(["/listappointments"]);
-    console.log(localStorage.getItem('access_token'));
+    this.router.navigate(["/listappointments"]);
   }
 
 }

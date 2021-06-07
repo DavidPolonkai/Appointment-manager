@@ -2,12 +2,14 @@ const { json } = require("express");
 const Appointment = require("../models/appointment");
 const router = require("express").Router();
 
-router.route("/getByUser").get((req, res) =>
+router.route("/getByUser/:id").get((req, res) =>
 {
-    Appointment.find(req.body, (error, data)=> {
+    const userid = req.params.id.split("=")[1];
+    Appointment.find({ 'userid': userid }, (error, data)=> {
         if (error) {
-            return next(error)
+            return error;
         } else {
+            console.log(data);
             res.json(data);
         }
     })
@@ -25,37 +27,19 @@ router.route("/create").post((req, res) =>
     })
 });
 
-
-/*router.route("/createuser").post((req, res) =>
-{
-    User.create(req.body, (error, data) => {
+router.route("/delete/:id").delete((req, res) => {
+    const id = req.params.id.split("=")[1];
+    Appointment.deleteOne({ '_id': id }, (error, data) => {
         if (error) {
-            console.log(error)
+            return error;
         } else {
             res.json(data);
         }
     })
-});
+})
 
-router.route("/getAllUsers").get((req, res) => {
-    User.find((error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data);
-        }
-    })   
-});
-
-router.route("/findUser").post((req, res) => {
-    User.findOne(req.body, (error, data) => {
-        if (error) {
-            return next(error)
-        } else {
-            res.json(data);
-        }
-   })
-});
-*/
+router.route("/update").put((req, res) => {
+    Appointment.updateOne(req.body)
+})
 
 module.exports = router

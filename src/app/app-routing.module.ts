@@ -24,6 +24,11 @@ const routes: Routes = [
     path: 'appointmentForm',
     component: AppointmentFormComponent,
     canActivate: [AuthGuard]
+  },
+  {
+    path: 'listAppointments',
+    component: ListAppointmentsComponent,
+    canActivate: [AuthGuard]
   }
 ];
 

@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
+import { Appointment } from 'src/model/Appointment';
+import { AppointmentService } from 'src/service/appointment.service';
 
 @Component({
   selector: 'app-list-appointments',
@@ -7,9 +9,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ListAppointmentsComponent implements OnInit {
 
-  constructor() { }
+  appointmentList: Appointment[] = [];
+  constructor(private appointmentService:AppointmentService) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
+    this.appointmentList = await this.appointmentService.getAll();
   }
 
 }

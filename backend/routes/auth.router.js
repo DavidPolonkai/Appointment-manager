@@ -11,9 +11,12 @@ router.route("").post((req, res) => {
         founduser = data;
         if (!founduser) return res.sendStatus(401);
 
-        token = jwt.sign({ userID: founduser._id, username: founduser.name }, 'appointment-app-shared-secret', { expiresIn: '2h' });
+        token = jwt.sign({ userID: founduser._id, username: founduser.name }, 'appointment-app-shared-secret', { expiresIn: '200s' });
         console.log(token);
-        res.send({ token });
+        res.send({
+            token: token,
+            timout: '200'
+        });
     });
 });
 module.exports = router
