@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { CanDeactivateGuard } from 'src/service/can-deactivate-guard.service.spec';
 import { AppointmentFormComponent } from './appointments/appointment-form/appointment-form.component';
 import { ListAppointmentsComponent } from './appointments/list-appointments/list-appointments.component';
 import { LoginUserComponent } from './user/login-user/login-user.component';
@@ -31,6 +30,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
-  providers: [CanDeactivateGuard]
+  providers: []
 })
 export class AppRoutingModule { }

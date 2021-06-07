@@ -1,5 +1,5 @@
 import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { LoggedInUserService } from '../service/logged-in-user.service';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -7,15 +7,12 @@ import { LoggedInUserService } from '../service/logged-in-user.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent{
-
-  name;
-  constructor(private loggedInUserService: LoggedInUserService) {
-    this.name = this.loggedInUserService.getName;
+  constructor(private authService:AuthService) {
   }
   title = 'Appointment-manager';
-
-  getName() {
-    return (this.name != null ? this.name : "");
-  }
   
+  logout() {
+    this.authService.logout();
+  }
+
 }

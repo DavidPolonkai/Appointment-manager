@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
 import { LoginUser } from 'src/model/LoginUser';
 import { User } from 'src/model/User';
+import { AuthService } from 'src/service/auth.service';
 import { UserService } from '../../../service/user.service';
 
 @Component({
@@ -19,7 +20,7 @@ export class LoginUserComponent implements OnInit {
 
   loginStatus = false;
 
-  constructor(private userservice: UserService,private formBuilder: FormBuilder, private router: Router) { }
+  constructor(private authService:AuthService,private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -27,9 +28,9 @@ export class LoginUserComponent implements OnInit {
   async login() {
     const requestedUser: LoginUser = this.loginForm.value;
     //requestedUser.password = crypto.hash(user.password,10);
-    this.loginStatus = await this.userservice.findOneUser(requestedUser);
+    this.authService.login(requestedUser);
     //if (this.loginStatus) this.router.navigate(["/listappointments"]);
-    console.log("success");
+    console.log(localStorage.getItem('access_token'));
   }
 
 }

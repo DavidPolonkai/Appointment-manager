@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const db = require("./dbms/index");
 const app = express();
-const userRoute = require("./routes/user.routes")
+const registrationRoute = require("./routes/registration.routes")
 const appointmentRoute = require("./routes/appointment.routes");
 const authRouter = require("./routes/auth.router");
 const PORT = process.env.PORT || 8080;
@@ -30,9 +30,19 @@ db.mongoose
   .then(() => {
     console.log("Connected to the database!");
 
-    app.use('/api/user', userRoute);
+    app.use('/api/user', registrationRoute);
     app.use('/api/appointment', appointmentRoute);
-    app.use(expressJwt({secret: 'appointment-app-shared-secret'}).unless('/api/auth'), authRouter);
+    app.use('/api/auth', authRouter);
+    app.use(expressJwt({
+      secret: 'appointment-app-shared-secret',
+      algorithms: ['sha1', 'RS256', 'HS256']
+    }).unless({
+      path: [
+        { url: '/api/auth', methods: ['POST']},
+        { url: '/api/user', methods: ['POST']}
+      ]
+    }));
+
   })
   .catch(err => {
     console.log("Cannot connect to the database!", err);
