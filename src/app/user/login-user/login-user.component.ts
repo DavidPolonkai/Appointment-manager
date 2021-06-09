@@ -28,8 +28,7 @@ export class LoginUserComponent implements OnInit {
   async login() {
     const requestedUser: LoginUser = this.loginForm.value;
     //requestedUser.password = crypto.hash(user.password,10);
-    this.authService.login(requestedUser);
-    this.router.navigate(["/listappointments"]);
+    const ret = await this.authService.login(requestedUser);
   }
 
 }

@@ -11,5 +11,6 @@
         <label for="date">Date</label>
         <input type="date" class="form-control" id="date" formControlName="date">
     </div>
-    <button type="submit" class="btn btn-primary mt-4" (click)="save()" [disabled]="appointmentForm.invalid">Submit</button>
+    <button *ngIf="!this.isItEdit" type="submit" class="btn btn-primary mt-4" (click)="save()" [disabled]="appointmentForm.invalid">Add appointment</button>
+    <button *ngIf="this.isItEdit" type="submit" class="btn btn-primary mt-4" (click)="edit()" [disabled]="appointmentForm.invalid">Edit appointment</button>
 </form>

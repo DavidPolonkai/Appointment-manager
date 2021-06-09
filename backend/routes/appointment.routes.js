@@ -9,7 +9,6 @@ router.route("/getByUser/:id").get((req, res) =>
         if (error) {
             return error;
         } else {
-            console.log(data);
             res.json(data);
         }
     })
@@ -18,7 +17,6 @@ router.route("/getByUser/:id").get((req, res) =>
 router.route("/create").post((req, res) =>
 {
     Appointment.create(req.body, (error, data) => {
-        console.log(data);
         if (error) {
             return next(error)
         } else {
@@ -36,10 +34,28 @@ router.route("/delete/:id").delete((req, res) => {
             res.json(data);
         }
     })
-})
+});
 
 router.route("/update").put((req, res) => {
-    Appointment.updateOne(req.body)
-})
+    Appointment.updateOne(req.body, (error, data) => {
+
+        if (error) {
+            return error;
+        } else {
+            res.json(data);
+        }
+    })
+});
+
+router.route("/getById/:id").get((req, res) => {
+    const id = req.params.id.split("=")[1];
+    Appointment.findById({'_id': id}, (error, data) => {
+        if (error) {
+            return error;
+        } else {
+            res.json(data);
+        }
+    })
+});
 
 module.exports = router

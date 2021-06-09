@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Appointment } from 'src/model/Appointment';
@@ -38,8 +38,13 @@ export class AppointmentService {
 
   async updateAppointment(appointment: Appointment) {
     const url = baseUrl + "/update";
-    const ret = this.http.put(url,appointment).toPromise();
+    const ret = this.http.put(baseUrl+"/update",appointment).toPromise();
     return ret;
+  }
+
+  async getById(getId: string) {
+    const url = baseUrl + "/getById";
+    return await this.http.get<Appointment>(url + "/id=" + getId).toPromise();
   }
 
 }

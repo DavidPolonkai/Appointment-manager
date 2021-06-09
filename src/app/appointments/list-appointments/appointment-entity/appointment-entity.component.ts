@@ -28,7 +28,9 @@ export class AppointmentEntityComponent implements OnInit {
   }
 
   modify() {
-    
+    const navigationString = "editAppointment";
+    const id = this.appointment._id;
+    this.router.navigate(["editAppointment", { id: id }]);
   }
 
   delete() {

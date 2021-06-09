@@ -26,7 +26,7 @@ export class AuthService {
     return localStorage.getItem(TOKEN_NAME);
   }
   
-  login(user: LoginUser): Observable<boolean>{
+  async login(user: LoginUser){
     const returned = this.http.post<{ token: string, timeout: string }>(baseUrl+'auth', user)
       .pipe(map(result => {
         const expiresAt = moment().add(result.timeout, 'second');
@@ -49,7 +49,6 @@ export class AuthService {
   private isTimeOutedAndAutoLogout():boolean {
     const timeout = JSON.parse(localStorage.getItem(TIMEOUT_NAME));
     const isTimeExpired = moment().isBefore(moment(timeout));
-    console.log(isTimeExpired);
     if (isTimeExpired) {
       this.logout()
     }
