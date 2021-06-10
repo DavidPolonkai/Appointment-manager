@@ -19,6 +19,7 @@ export class AppointmentFormComponent implements OnInit {
   })
   private id = null;
   isItEdit: boolean;
+  appointment: Appointment;
 
   constructor(private formBuilder: FormBuilder, private appointmentService: AppointmentService, private route: ActivatedRoute) { }
 
@@ -26,12 +27,12 @@ export class AppointmentFormComponent implements OnInit {
     this.id = this.route.snapshot.params['id'];
     this.isItEdit = this.id != null;
     if (this.isItEdit) {
-      const appointment: Appointment = await this.appointmentService.getById(this.id);
+      this.appointment = await this.appointmentService.getById(this.id);
       const format = 'yyyy-MM-dd';
       const locale = 'en-US';
-      const formattedDate = formatDate(appointment.date, format, locale);
-      this.appointmentForm.controls['title'].setValue(appointment.title);
-      this.appointmentForm.controls['body'].setValue(appointment.body);
+      const formattedDate = formatDate(this.appointment.date, format, locale);
+      this.appointmentForm.controls['title'].setValue(this.appointment.title);
+      this.appointmentForm.controls['body'].setValue(this.appointment.body);
       this.appointmentForm.controls['date'].setValue(formattedDate);
     }
   }
@@ -43,7 +44,8 @@ export class AppointmentFormComponent implements OnInit {
 
   async edit() {
     const appointment: Appointment = this.appointmentForm.value;
-    console.log(appointment);
+    appointment._id = this.appointment._id;
+    appointment.userid = this.appointment.userid;
     await this.appointmentService.updateAppointment(appointment);
   }
 }

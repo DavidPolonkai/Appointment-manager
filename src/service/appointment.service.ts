@@ -38,6 +38,7 @@ export class AppointmentService {
 
   async updateAppointment(appointment: Appointment) {
     const url = baseUrl + "/update";
+    console.log(appointment);
     const ret = this.http.put(baseUrl+"/update",appointment).toPromise();
     return ret;
   }

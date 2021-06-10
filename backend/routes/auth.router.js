@@ -2,6 +2,7 @@ const { json } = require("express");
 const User = require("../models/user");
 const router = require("express").Router();
 var token = require("../JWTtoken/JWT").token;
+const RSA_PUBLIC_KEY =  require("../JWTtoken/JWT").RSA_PUBLIC_KEY;
 const jwt = require('jsonwebtoken');
 
 router.route("").post((req, res) => {
@@ -11,7 +12,7 @@ router.route("").post((req, res) => {
         founduser = data;
         if (!founduser) return res.sendStatus(401);
 
-        token = jwt.sign({ userID: founduser._id, username: founduser.name }, 'appointment-app-shared-secret', { expiresIn: '200s' });
+        token = jwt.sign({ userID: founduser._id, username: founduser.name }, RSA_PUBLIC_KEY, { expiresIn: '200s' });
         console.log(token);
         res.send({
             token: token,
