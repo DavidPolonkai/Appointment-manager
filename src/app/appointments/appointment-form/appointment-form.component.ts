@@ -45,7 +45,6 @@ export class AppointmentFormComponent implements OnInit {
   async edit() {
     const appointment: Appointment = this.appointmentForm.value;
     appointment._id = this.appointment._id;
-    appointment.userid = this.appointment.userid;
     await this.appointmentService.updateAppointment(appointment);
   }
 }

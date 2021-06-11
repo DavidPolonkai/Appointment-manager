@@ -60,11 +60,6 @@ export class AuthService {
     return (this.getToken() !== null)&&(!this.isTimeOutedAndAutoLogout());
   }
 
-  public get loggedInUserId(): string{
-    this.isTimeOutedAndAutoLogout();
-    return this.parseJwt(this.getToken()).userID;
-  }
-
   public get loggedInUserName(): string{
     this.isTimeOutedAndAutoLogout();
     return this.parseJwt(this.getToken()).userName;
