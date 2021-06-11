@@ -7,16 +7,12 @@ import { AuthService } from 'src/service/auth.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit,OnChanges{
-  loggedInUserName;
+  loggedInUserName = this.authService.getloggedInUserName();
 
   constructor(private authService:AuthService) {
   }
   ngOnChanges(changes: SimpleChanges): void {
-    let change = changes['authService'];
-    if (change.currentValue) {
-      this.loggedInUserName = this.authService.loggedInUserName;
-    }
-    console.log(this.loggedInUserName);
+    
   }
   ngOnInit(): void {
     this.logout();
@@ -26,6 +22,10 @@ export class AppComponent implements OnInit,OnChanges{
   logout() {
     this.authService.logout();
     this.loggedInUserName = '';
+  }
+
+  getLogin() {
+    this.loggedInUserName = this.authService.getloggedInUserName();
   }
 
 }

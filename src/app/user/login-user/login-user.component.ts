@@ -1,10 +1,8 @@
-import { Component, OnInit, EventEmitter, Output } from '@angular/core';
+import { Component, OnInit} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
-import { LoginUser } from 'src/model/LoginUser';
-import { User } from 'src/model/User';
 import { AuthService } from 'src/service/auth.service';
-import { UserService } from '../../../service/user.service';
+import * as bcrypt from 'bcrypt';
 
 @Component({
   selector: 'app-login-user',
@@ -18,7 +16,7 @@ export class LoginUserComponent implements OnInit {
   })
 
 
-  loginStatus = false;
+  loginStatus = true;
 
   constructor(private authService:AuthService,private formBuilder: FormBuilder, private router: Router) { }
 
@@ -26,9 +24,18 @@ export class LoginUserComponent implements OnInit {
   }
 
   async login() {
-    const requestedUser: LoginUser = this.loginForm.value;
-    //requestedUser.password = crypto.hash(user.password,10);
+    const requestedUser = this.loginForm.value;
+    requestedUser.password = bcrypt.hash(requestedUser.password,10);
     const ret = await this.authService.login(requestedUser);
+    this.loginStatus = this.authService.loggedIn;
+  }
+
+  get email() {
+    return this.loginForm.get('email');
+  }
+
+  get password() {
+    return this.loginForm.get('password');
   }
 
 }

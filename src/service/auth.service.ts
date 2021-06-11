@@ -4,6 +4,8 @@ import { Observable } from 'rxjs';
 import { LoginUser } from 'src/model/LoginUser';
 import { map } from 'rxjs/operators';
 import * as moment from "moment";
+import { AppComponent } from 'src/app/app.component';
+import { Router } from '@angular/router';
 
 const TOKEN_NAME = 'access_token';
 const TIMEOUT_NAME = TOKEN_NAME + '_timeout';
@@ -14,7 +16,7 @@ const baseUrl = 'http://localhost:8080/api/';
 export class AuthService {
   
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router:Router) { }
 
   private parseJwt(token) {
     var base64Url = token.split('.')[1];
@@ -33,17 +35,18 @@ export class AuthService {
         console.log(result.token);
         localStorage.setItem(TOKEN_NAME, result.token);
         localStorage.setItem(TIMEOUT_NAME, JSON.stringify(expiresAt.valueOf()));
+        this.router.navigate(['listAppointments']);
         return true;
       })
     );
-    returned.toPromise();
-    return returned;
+    return returned.toPromise();
   }
 
   logout() {
     console.log("Logging out..");
     localStorage.removeItem(TOKEN_NAME);
     localStorage.removeItem(TIMEOUT_NAME);
+    this.router.navigate(['login']);
   }
 
   private isTimeOutedAndAutoLogout():boolean {
@@ -60,8 +63,15 @@ export class AuthService {
     return (this.getToken() !== null)&&(!this.isTimeOutedAndAutoLogout());
   }
 
-  public get loggedInUserName(): string{
+  public getloggedInUserName(){
     this.isTimeOutedAndAutoLogout();
-    return this.parseJwt(this.getToken()).userName;
+    const nullString: String = "";
+    if (this.loggedIn) {
+      return this.parseJwt(this.getToken()).userName;
+    }
+    else {
+      return nullString;
+    }
   }
 }
+
