@@ -1,7 +1,7 @@
 import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Appointment } from 'src/model/Appointment';
 import { AppointmentService } from 'src/service/appointment.service';
 
@@ -20,7 +20,7 @@ export class AppointmentFormComponent implements OnInit {
   isItEdit: boolean;
   appointment: Appointment;
 
-  constructor(private formBuilder: FormBuilder, private appointmentService: AppointmentService, private route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private appointmentService: AppointmentService, private route: ActivatedRoute,private router:Router) { }
 
   async ngOnInit() {
     this.id = this.route.snapshot.params['id'];
@@ -46,12 +46,14 @@ export class AppointmentFormComponent implements OnInit {
   async save() {
     const appointment: Appointment = this.appointmentForm.value;
     await this.appointmentService.save(appointment);
+    this.router.navigate(["listAppointments"]);
   }
 
   async edit() {
     const appointment: Appointment = this.appointmentForm.value;
     appointment._id = this.appointment._id;
     await this.appointmentService.updateAppointment(appointment);
+    this.router.navigate(["listAppointments"]);
   }
 
   get date() {
