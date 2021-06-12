@@ -1,8 +1,6 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { Appointment } from 'src/model/Appointment';
-import { AuthService } from './auth.service';
 
 const baseUrl = 'http://localhost:8080/api/appointment';
 

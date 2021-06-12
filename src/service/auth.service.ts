@@ -4,7 +4,6 @@ import { LoginUser } from 'src/model/LoginUser';
 import { map } from 'rxjs/operators';
 import * as moment from "moment";
 import { Router } from '@angular/router';
-import 'rxjs/add/operator/catch';
 
 const TOKEN_NAME = 'access_token';
 const TIMEOUT_NAME = TOKEN_NAME + '_timeout';

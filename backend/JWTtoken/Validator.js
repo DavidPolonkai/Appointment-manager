@@ -1,6 +1,5 @@
 const expressJwt = require('express-jwt');
 const RSA_PUBLIC_KEY = require('./JWT').RSA_PUBLIC_KEY;
-const { token } = require('./JWT');
 atob = require("atob");
 
 const checkIfAuthenticated = expressJwt({

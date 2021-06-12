@@ -1,4 +1,3 @@
-const { json } = require("express");
 const User = require("../models/user");
 const router = require("express").Router();
 var token = require("../JWTtoken/JWT").token;

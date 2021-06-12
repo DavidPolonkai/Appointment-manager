@@ -1,4 +1,3 @@
-import { formatDate } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Appointment } from 'src/model/Appointment';

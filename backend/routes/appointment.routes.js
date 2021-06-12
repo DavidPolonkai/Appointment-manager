@@ -1,4 +1,3 @@
-const { json } = require("express");
 const Appointment = require("../models/appointment");
 const router = require("express").Router();
 const checkIfAuthenticated = require("../JWTtoken/Validator").checkIfAuthenticated;

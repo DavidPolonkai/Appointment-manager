@@ -2,7 +2,6 @@ import { formatDate } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import { first } from 'rxjs/operators';
 import { Appointment } from 'src/model/Appointment';
 import { AppointmentService } from 'src/service/appointment.service';
 
