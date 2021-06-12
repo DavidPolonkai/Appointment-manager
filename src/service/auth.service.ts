@@ -57,8 +57,6 @@ export class AuthService {
 
 
   public get loggedIn(): boolean {
-    console.log(this.getToken() !== null);
-    console.log(!this.isTimeOutedAndAutoLogout());
     return (this.getToken() !== null)&&(!this.isTimeOutedAndAutoLogout());
   }
 

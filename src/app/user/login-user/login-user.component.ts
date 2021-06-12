@@ -22,14 +22,15 @@ export class LoginUserComponent implements OnInit {
   constructor(private authService:AuthService,private formBuilder: FormBuilder, private router: Router) { }
 
   ngOnInit(): void {
+    this.loginStatus = true;
   }
 
   async login() {
     let requestedUser = null;
     requestedUser = this.loginForm.value;
     requestedUser.password = sha256(requestedUser.password);
+    this.loginStatus = false;
     const ret = await this.authService.login(requestedUser);
-    this.loginStatus = this.authService.loggedIn;
   }
 
   get email() {

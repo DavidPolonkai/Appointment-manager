@@ -16,7 +16,6 @@ export class ListAppointmentsComponent implements OnInit {
 
   async ngOnInit(): Promise<void> {
     this.appointmentList = await this.appointmentService.getAll();
-    console.log(this.authService.getLoggedInUser());
     this.userName = this.authService.getLoggedInUser();
   }
 

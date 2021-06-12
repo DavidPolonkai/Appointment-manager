@@ -57,8 +57,6 @@ export class RegisterUserComponent implements OnInit {
 
   doesTwoPasswordsMatch() {
     this.passwordMatch = this.regForm.value.password == this.regForm.value.password2;
-    console.log(this.passwordMatch);
-    console.log(this.regForm.value);
     return this.passwordMatch;
   }
 
