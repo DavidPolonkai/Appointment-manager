@@ -9,14 +9,14 @@
   <div class="form-group m-2">
     <label for="password">Password</label>
     <input type="password" class="form-control" id="password" formControlName="password">
-    <div *ngIf="password.invalid" class="alert alert-danger">
+    <div *ngIf="password.invalid && (password.dirty||password.touched)" class="alert alert-danger mt-1">
       <small>Invalid password</small>
     </div>
   </div>
   <div class="m-2">
     <button type="submit" class="btn btn-primary my-3" (click)="login()" [disabled]="loginForm.invalid">Login</button>
   </div>
-  <div *ngIf="!this.loginStatus" class="alert alert-danger">
-    <small>Invalid login</small>
+  <div *ngIf="!this.loginStatus" class="alert alert-danger mt-1">
+    <small>Invalid email or password</small>
   </div>
 </form>

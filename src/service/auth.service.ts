@@ -1,20 +1,23 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { LoginUser } from 'src/model/LoginUser';
 import { map } from 'rxjs/operators';
 import * as moment from "moment";
-import { AppComponent } from 'src/app/app.component';
 import { Router } from '@angular/router';
+import 'rxjs/add/operator/catch';
 
 const TOKEN_NAME = 'access_token';
 const TIMEOUT_NAME = TOKEN_NAME + '_timeout';
 const baseUrl = 'http://localhost:8080/api/';
+
+
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  loggedInUser: String;
+
+  static loggedInUser: String;
+
   constructor(private http: HttpClient, private router:Router) { }
 
   private getToken() {
@@ -27,7 +30,7 @@ export class AuthService {
         const expiresAt = moment().add(result.timeout, 's');
         localStorage.setItem(TOKEN_NAME, result.token);
         localStorage.setItem(TIMEOUT_NAME, JSON.stringify(expiresAt.valueOf()));
-        this.loggedInUser = result.username;
+        AuthService.loggedInUser = result.username;
         this.router.navigate(['listAppointments']);
 
         return true;
@@ -41,6 +44,7 @@ export class AuthService {
     localStorage.removeItem(TOKEN_NAME);
     localStorage.removeItem(TIMEOUT_NAME);
     this.router.navigate(['login']);
+    AuthService.loggedInUser = '';
   }
 
   private isTimeOutedAndAutoLogout():boolean {
@@ -60,7 +64,7 @@ export class AuthService {
   }
 
   public getLoggedInUser(): String{
-    return this.loggedInUser;
+    return AuthService.loggedInUser;
   }
  
 }

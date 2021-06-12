@@ -28,13 +28,20 @@ export class AppointmentFormComponent implements OnInit {
     this.isItEdit = this.id != null;
     if (this.isItEdit) {
       this.appointment = await this.appointmentService.getById(this.id);
-      const format = 'yyyy-MM-dd';
-      const locale = 'en-US';
-      const formattedDate = formatDate(this.appointment.date, format, locale);
       this.appointmentForm.controls['title'].setValue(this.appointment.title);
       this.appointmentForm.controls['body'].setValue(this.appointment.body);
-      this.appointmentForm.controls['date'].setValue(formattedDate);
+      this.appointmentForm.controls['date'].setValue(this.getFormattedDate(this.appointment.date));
     }
+  }
+
+  private getFormattedDate(date) {
+    const format = 'yyyy-MM-dd';
+    const locale = 'en-US';
+    return formatDate(date, format, locale);
+  }
+
+  getToday() {
+    return this.getFormattedDate(new Date())
   }
 
   async save() {

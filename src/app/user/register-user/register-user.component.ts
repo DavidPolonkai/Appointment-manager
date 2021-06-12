@@ -11,11 +11,14 @@ import { UserService } from '../../../service/user.service'
 })
 export class RegisterUserComponent implements OnInit {
   regForm: FormGroup = this.formBuilder.group({
-    email: ['email@email.com', [Validators.required, Validators.email]],
-    address: ['address example 2',[Validators.required]],
-    name: ['Hufnagel ',[Validators.required]],
-    password: ['asdasdasd',[Validators.required,Validators.minLength(8)]]
+    email: ['', [Validators.required, Validators.email]],
+    address: ['',[Validators.required]],
+    name: ['',[Validators.required]],
+    password: ['', [Validators.required, Validators.minLength(8)]],
+    password2: ['',[Validators.required]]
   })
+
+  passwordMatch = false;
 
   constructor(private userservice: UserService,private formBuilder: FormBuilder, private router: Router) { }
 
@@ -23,11 +26,40 @@ export class RegisterUserComponent implements OnInit {
   }
 
   async register() {
-    const user = this.regForm.value;
-    user.password = sha256(user.password);
-    //console.log(user);
-    (await this.userservice.create(user)).subscribe(() =>
-    this.router.navigate(["/login"]));
+    if (this.doesTwoPasswordsMatch) {
+      const user = this.regForm.value;
+      delete user.password2;
+      user.password = sha256(user.password);
+      (await this.userservice.create(user)).subscribe(() =>
+        this.router.navigate(["/login"]));
+    }
+  }
+  
+  get email() {
+    return this.regForm.get("email");
+  }
+
+  get address() {
+    return this.regForm.get("address");
+  }
+
+  get name() {
+    return this.regForm.get("name");
+  }
+
+  get password() {
+    return this.regForm.get("password");
+  }
+
+  get password2() {
+    return this.regForm.get("password2");
+  }
+
+  doesTwoPasswordsMatch() {
+    this.passwordMatch = this.regForm.value.password == this.regForm.value.password2;
+    console.log(this.passwordMatch);
+    console.log(this.regForm.value);
+    return this.passwordMatch;
   }
 
 }
