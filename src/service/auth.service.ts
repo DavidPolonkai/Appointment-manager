@@ -14,29 +14,22 @@ const baseUrl = 'http://localhost:8080/api/';
   providedIn: 'root'
 })
 export class AuthService {
-  
-
+  loggedInUser: String;
   constructor(private http: HttpClient, private router:Router) { }
-
-  private parseJwt(token) {
-    var base64Url = token.split('.')[1];
-    var base64 = base64Url.replace('-', '+').replace('_', '/');
-    return JSON.parse(atob(base64));
-  }
 
   private getToken() {
     return localStorage.getItem(TOKEN_NAME);
   }
   
   async login(user: LoginUser){
-    const returned = this.http.post<{ token: string, timeout: string }>(baseUrl+'auth', user)
+    const returned = this.http.post<{ token: string, timeout: string, username: string}>(baseUrl+'auth', user)
       .pipe(map(result => {
         const expiresAt = moment().add(result.timeout, 's');
-        console.log(result);
-        //console.log(result.token);
         localStorage.setItem(TOKEN_NAME, result.token);
         localStorage.setItem(TIMEOUT_NAME, JSON.stringify(expiresAt.valueOf()));
+        this.loggedInUser = result.username;
         this.router.navigate(['listAppointments']);
+
         return true;
       })
     );
@@ -66,12 +59,9 @@ export class AuthService {
     return (this.getToken() !== null)&&(!this.isTimeOutedAndAutoLogout());
   }
 
-  public getloggedInUserName(){
-    this.isTimeOutedAndAutoLogout();
-    if (this.loggedIn) {
-      return this.parseJwt(this.getToken()).userName;
-    }
-    return null;
+  public getLoggedInUser(): String{
+    return this.loggedInUser;
   }
+ 
 }
 
