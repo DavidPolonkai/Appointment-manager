@@ -1,6 +1,7 @@
 import { Component, OnInit, Output } from '@angular/core';
 import { Appointment } from 'src/model/Appointment';
 import { AppointmentService } from 'src/service/appointment.service';
+import { AuthService } from 'src/service/auth.service';
 
 @Component({
   selector: 'app-list-appointments',
@@ -10,10 +11,13 @@ import { AppointmentService } from 'src/service/appointment.service';
 export class ListAppointmentsComponent implements OnInit {
 
   appointmentList: Appointment[] = [];
-  constructor(private appointmentService:AppointmentService) { }
+  userName: String;
+  constructor(private appointmentService:AppointmentService, private authService:AuthService) { }
 
   async ngOnInit(): Promise<void> {
     this.appointmentList = await this.appointmentService.getAll();
+    console.log(this.authService.getloggedInUserName());
+    this.userName = this.authService.getloggedInUserName();
   }
 
 }

@@ -14,7 +14,7 @@ import { AppointmentService } from 'src/service/appointment.service';
 export class AppointmentFormComponent implements OnInit {
   appointmentForm: FormGroup = this.formBuilder.group({
     title: ['', [Validators.required]],
-    body: ['', [Validators.required]],
+    body: ['', ],
     date: [, [Validators.required]],
   })
   private id = null;
@@ -46,5 +46,13 @@ export class AppointmentFormComponent implements OnInit {
     const appointment: Appointment = this.appointmentForm.value;
     appointment._id = this.appointment._id;
     await this.appointmentService.updateAppointment(appointment);
+  }
+
+  get date() {
+    return this.appointmentForm.get("date");
+  }
+
+  get title() {
+    return this.appointmentForm.get("title");
   }
 }

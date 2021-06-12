@@ -1,5 +1,5 @@
 let token;
-const timeout = 120;
+const timeout = '200';
 const RSA_PUBLIC_KEY = 'appointment-app-shared-secret';
 module.exports.token = token;
 module.exports.timeout = timeout;

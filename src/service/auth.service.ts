@@ -31,8 +31,9 @@ export class AuthService {
   async login(user: LoginUser){
     const returned = this.http.post<{ token: string, timeout: string }>(baseUrl+'auth', user)
       .pipe(map(result => {
-        const expiresAt = moment().add(result.timeout, 'second');
-        console.log(result.token);
+        const expiresAt = moment().add(result.timeout, 's');
+        console.log(result);
+        //console.log(result.token);
         localStorage.setItem(TOKEN_NAME, result.token);
         localStorage.setItem(TIMEOUT_NAME, JSON.stringify(expiresAt.valueOf()));
         this.router.navigate(['listAppointments']);
@@ -51,7 +52,7 @@ export class AuthService {
 
   private isTimeOutedAndAutoLogout():boolean {
     const timeout = JSON.parse(localStorage.getItem(TIMEOUT_NAME));
-    const isTimeExpired = moment().isBefore(moment(timeout));
+    const isTimeExpired = moment().diff(timeout)>0;
     if (isTimeExpired) {
       this.logout()
     }
@@ -60,18 +61,17 @@ export class AuthService {
 
 
   public get loggedIn(): boolean {
+    console.log(this.getToken() !== null);
+    console.log(!this.isTimeOutedAndAutoLogout());
     return (this.getToken() !== null)&&(!this.isTimeOutedAndAutoLogout());
   }
 
   public getloggedInUserName(){
     this.isTimeOutedAndAutoLogout();
-    const nullString: String = "";
     if (this.loggedIn) {
       return this.parseJwt(this.getToken()).userName;
     }
-    else {
-      return nullString;
-    }
+    return null;
   }
 }
 

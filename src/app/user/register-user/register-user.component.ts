@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms'
 import { Router } from '@angular/router';
+import { sha256 } from 'js-sha256';
 import { UserService } from '../../../service/user.service'
-import * as bcrypt from 'bcrypt';
-
 
 @Component({
   selector: 'app-register-user',
@@ -25,8 +24,8 @@ export class RegisterUserComponent implements OnInit {
 
   async register() {
     const user = this.regForm.value;
-    user.password = bcrypt.hash(user.password, 10);
-    console.log(user);
+    user.password = sha256(user.password);
+    //console.log(user);
     (await this.userservice.create(user)).subscribe(() =>
     this.router.navigate(["/login"]));
   }

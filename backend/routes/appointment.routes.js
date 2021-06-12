@@ -23,7 +23,6 @@ router.route("/create").post(checkIfAuthenticated,(req, res) =>{
         date: req.body.date,
         userid: userId
     }
-    console.log(createAppointment);
     Appointment.create(createAppointment, (error, data) => {
         if (error) {
             return next(error)
@@ -54,7 +53,6 @@ router.route("/update").put(checkIfAuthenticated, (req, res) => {
         userid: userId
     }
     Appointment.updateOne({"_id": req.body._id, 'userid': userId}, createAppointment, (error, data) => {
-        console.log(req.body);
         if (error) {
             return error;
         } else {

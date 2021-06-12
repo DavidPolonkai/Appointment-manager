@@ -1,4 +1,3 @@
-const jwksRsa = require('jwks-rsa');
 const expressJwt = require('express-jwt');
 const RSA_PUBLIC_KEY = require('./JWT').RSA_PUBLIC_KEY;
 const { token } = require('./JWT');
